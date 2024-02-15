@@ -6,27 +6,41 @@
 #include "serial.h"
 #include "LCD.h"
 #include <stdio.h>
+#include "comparator.h"
+#include "LEDarray.h"
+#include "ADC.h"
+
 
 #define _XTAL_FREQ 64000000 //note intrinsic _delay function is 62.5ns at 64,000,000Hz  
+
 
 void main(void) {
     //initializing all necessary functions
     initUSART4();
-    LCD_init();
+    LCD_Init();
+    ADC_init();
     
     //defining variables
-    char *data;
+    char buf[50];
+    unsigned int ADC_val;
     
-    //writing on first line
-    LCD_setline(1);
     
     while (1){
-        //receiving and printing charcaters
-        char receivedChar = getCharSerial4();
-        LCD_sendbyte(receivedChar,1);
+        //set variable equal to ADC value
+        ADC_val = ADC_getval();
         
-        //sends characters from LCD back to PC
-        sendCharSerial4(receivedChar);
+        //writing on first line
+        LCD_setline(1);
+        
+        //convert ADC value to string
+        ADC2String(buf, ADC_val);
+        
+        
+        //send the string over USART
+        sendStringSerial4(buf); //Send ADC VAL to realterm program
+        
+        __delay_ms(200); // Wait for 1 second
+
     }
 }
 

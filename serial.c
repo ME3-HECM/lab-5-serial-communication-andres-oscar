@@ -28,9 +28,14 @@ void sendCharSerial4(char charToSend) {
 }
 
 
-//function to send a string over the serial interface
 void sendStringSerial4(char *string){
 	//Hint: look at how you did this for the LCD lab 
+    // This counts the amount of spaces used 
+    while(*string != 0){  // While the data pointed to isn't a 0x00 do below (strings in C must end with a NULL byte) 
+        //Send out the current byte pointed to and increment the pointer
+		sendCharSerial4(*string++); 
+        __delay_us(20);
+	}
 }
 
 

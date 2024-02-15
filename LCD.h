@@ -3,23 +3,20 @@
 
 #include <xc.h>
 
-
-//Define Pins Used with the LCD Screen
-#define LCD_RS LATCbits.LATC6
-#define LCD_E LATCbits.LATC2
-#define LCD_DB4 LATBbits.LATB3
-#define LCD_DB5 LATBbits.LATB2
-#define LCD_DB6 LATEbits.LATE3
-#define LCD_DB7 LATEbits.LATE1
-
+#define _XTAL_FREQ 64000000 //note intrinsic _delay function is 62.5ns at 64,000,000Hz  
 
 void LCD_E_TOG(void);
 void LCD_sendnibble(unsigned char number);
 void LCD_sendbyte(unsigned char Byte, char type);
-void LCD_init(void);
+void LCD_Init(void);
 void LCD_setline (char line);	
 void LCD_sendstring(char *string);
+void LCD_scroll(char direction);
 void LCD_clear(void);
-void time2String(char *buf, unsigned int h, unsigned int day, unsigned int year, unsigned int leap);
+void ADC2String(char *buf, unsigned int number);
+void LCD_customChar(void);
+void LCD_createChar(unsigned char location, unsigned char charmap[]);
+void LCD_setCursor(int column, int line);
+
 
 #endif
