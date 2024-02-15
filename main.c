@@ -39,7 +39,7 @@ void main(void) {
         //send the string over USART
         sendStringSerial4(buf); //Send ADC VAL to realterm program
         
-        __delay_ms(200); // Wait for 1 second
+        __delay_ms(1000); // Wait for 1 second
 
     }
 }
