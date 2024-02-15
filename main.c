@@ -24,6 +24,9 @@ void main(void) {
         //receiving and printing charcaters
         char receivedChar = getCharSerial4();
         LCD_sendbyte(receivedChar,1);
+        
+        //sends characters from LCD back to PC
+        sendCharSerial4(receivedChar);
     }
 }
 
