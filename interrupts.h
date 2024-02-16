@@ -7,5 +7,6 @@
 
 void Interrupts_init(void);
 void __interrupt(high_priority) HighISR();
+extern volatile char dataFlag;
 
 #endif

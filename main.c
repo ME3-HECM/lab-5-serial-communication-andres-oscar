@@ -9,19 +9,23 @@
 #include "comparator.h"
 #include "LEDarray.h"
 #include "ADC.h"
+#include "interrupts.h"
 
 
 #define _XTAL_FREQ 64000000 //note intrinsic _delay function is 62.5ns at 64,000,000Hz  
 
+extern volatile int sendFlag;
+extern volatile int getFlag;
 
 void main(void) {
     //initializing all necessary functions
     initUSART4();
     LCD_Init();
     ADC_init();
+    Interrupts_init();
     
     //defining variables
-    char buf[50];
+    char buf[20];
     unsigned int ADC_val;
     
     
@@ -37,8 +41,14 @@ void main(void) {
         
         
         //send the string over USART
-        sendStringSerial4(buf); //Send ADC VAL to realterm program
+        TxBufferedString(buf); //Send ADC VAL to realterm program in rotary buffer mode
         
+        
+        //waits for entire string
+        while (dataFlag){
+            sendTxBuf();
+           
+        }   
         __delay_ms(1000); // Wait for 1 second
 
     }

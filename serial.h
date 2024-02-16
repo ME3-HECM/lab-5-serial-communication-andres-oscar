@@ -9,6 +9,7 @@
 #define TX_BUF_SIZE 60
 
 
+
 //variables for a software RX/TX buffer
 volatile char EUSART4RXbuf[RX_BUF_SIZE];
 volatile char RxBufWriteCnt=0;
@@ -17,6 +18,9 @@ volatile char RxBufReadCnt=0;
 volatile char EUSART4TXbuf[TX_BUF_SIZE];
 volatile char TxBufWriteCnt=0;
 volatile char TxBufReadCnt=0;
+
+//variable for signifying buffer is empty
+volatile char dataFlag=1;
 
 
 //basic EUSART funcitons

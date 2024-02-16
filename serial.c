@@ -84,10 +84,22 @@ char isDataInTxBuf (void){
 //add a string to the buffer
 void TxBufferedString(char *string){
 	//Hint: look at how you did this for the LCD lab 
+    while(*string != 0){  // While the data pointed to isn't a 0x00 do below (strings in C must end with a NULL byte) 
+        //Send out the current byte pointed to and increment the pointer
+		putCharToTxBuf(*string++); 
+    }
 }
 
 //initialise interrupt driven transmission of the Tx buf
 //your ISR needs to be setup to turn this interrupt off once the buffer is empty
 void sendTxBuf(void){
-    if (isDataInTxBuf()) {PIE4bits.TX4IE=1;} //enable the TX interrupt to send data
+    //enable the TX interrupt to send data
+    if (isDataInTxBuf()) {
+        PIE4bits.TX4IE=1;
+        dataFlag=1;
+    }     
+    //resets data flag
+    else { 
+        dataFlag=0;
+    }
 }
